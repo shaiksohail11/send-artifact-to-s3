@@ -1,0 +1,7 @@
+---
+# tasks file for kishore
+- name: install java package
+  ansible.builtin.apt:
+    name: openjdk-{{ version }}-jdk
+    update_cache: true
+    state: present
