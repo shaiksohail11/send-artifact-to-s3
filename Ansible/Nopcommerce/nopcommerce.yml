@@ -1,5 +1,5 @@
 ---
-- name: installing dotnet
+- name: install nopcommerce
   hosts: all
   become: yes
   tasks:
