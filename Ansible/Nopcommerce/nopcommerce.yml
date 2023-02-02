@@ -1,0 +1,36 @@
+---
+- name: installing dotnet
+  hosts: all
+  become: yes
+  tasks:
+    - name: install unzip
+      ansible.builtin.apt:
+        name: unzip
+        update_cache: true
+        state: present
+    - name: creating nopcommerce directory
+      ansible.builtin.file:
+        path: /var/www/nopCommerce
+        state: directory
+    - name: extract nopcommerce
+      ansible.builtin.unarchive:
+        src: "https://github.com/nopSolutions/nopCommerce/releases/download/release-4.60.1/nopCommerce_4.60.1_NoSource_linux_x64.zip"
+        remote_src: yes
+        dest: /var/www/nopCommerce
+    - name: creating bin dir
+      ansible.builtin.file:
+        path: /var/www/nopCommerce/bin
+        state: directory
+    - name: creating logs dir
+      ansible.builtin.file:
+        path: /var/www/nopCommerce/logs
+        state: directory
+    - name: copying service file
+      ansible.builtin.copy:
+        src: nopCommerce.service
+        dest: /etc/systemd/system/nopCommerce.service
+    - name: starting nopcommerce service
+      ansible.builtin.systemd:
+        name: nopCommerce.service
+        enabled: yes
+        state: started
