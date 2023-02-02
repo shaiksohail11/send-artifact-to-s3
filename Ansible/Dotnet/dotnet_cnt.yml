@@ -1,0 +1,16 @@
+---
+- name: installing dotnet on centos
+  hosts: all
+  become: yes
+  tasks:
+    - name: adding repo
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+    - name: Install a list of packages
+      ansible.builtin.yum:
+        update_cache: yes
+        pkg:
+        - dotnet-sdk-7.0
+        - aspnetcore-runtime-7.0
+        - dotnet-runtime-7.0
+        state: present

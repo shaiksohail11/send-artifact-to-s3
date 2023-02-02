@@ -1,0 +1,14 @@
+---
+- name: installing java multi packages
+  hosts: all
+  become: true
+  vars:
+    version: "11"
+  tasks:
+    - name: imstall java package
+      ansible.builtin.apt:
+        name: openjdk-{{ version }}-jdk
+        update_cache: true
+        state: present
+
+        

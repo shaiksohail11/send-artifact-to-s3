@@ -1,0 +1,38 @@
+---
+- name: installing nodejs
+  hosts: all
+  become: true
+  tasks:
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: https://deb.nodesource.com/setup_18.x
+        dest: /home/ubuntu/setup_18.x.sh
+        mode: '0777' 
+    - name: executing shell file
+      ansible.builtin.shell: "/home/ubuntu/setup_18.x.sh"
+    - name: install nodejs
+      ansible.builtin.apt:
+        name: nodejs
+        update_cache: true
+        state: present
+
+
+---
+- name: installing nodejs
+  hosts: all
+  become: true
+  vars:
+    version: "18"
+  tasks:
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: https://deb.nodesource.com/setup_{{ version }}.x
+        dest: /home/ubuntu/setup_{{ version }}.x.sh
+        mode: '0777' 
+    - name: executing shell file
+      ansible.builtin.shell: "/home/ubuntu/setup_{{ version }}.x.sh"
+    - name: install nodejs
+      ansible.builtin.apt:
+        name: nodejs
+        update_cache: true
+        state: present
