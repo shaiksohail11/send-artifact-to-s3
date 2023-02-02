@@ -8,5 +8,5 @@ java --version
 
 ```
 
-1. check java version ![preview](/images/java1.png) 
-2. refer here for the ansible playbook [refer here](/Java/java_versions.yml)
+1. check java version ![preview](images/java1.png) 
+2. refer here for the ansible playbook [refer here](Java/java_versions.yml)
