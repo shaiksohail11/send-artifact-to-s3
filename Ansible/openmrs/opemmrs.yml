@@ -1,0 +1,97 @@
+---
+- name: instlling openmrs application
+  hosts: all
+  become: true
+  tasks:
+    - name: install java 8
+      ansible.builtin.apt:
+        name: openjdk-8-jdk
+        update_cache: true
+        state: present
+    - name: adding tomcat group
+      ansible.builtin.group:
+        name: tomcat
+        state: present
+    - name: adding user tomcat
+      ansible.builtin.user:
+        name: tomcat
+        create_home: true
+        group: tomcat
+        home: /opt/tomcat
+        shell: /bin/false
+        state: present
+    - name: create a directory
+      ansible.builtin.file:
+        path: /opt/tomcat
+        recurse: yes
+        owner: tomcat
+        group: tomcat
+        state: directory
+        mode: '0777'
+    - name: download and untar tomcat
+      ansible.builtin.unarchive:
+        src: https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.109/bin/apache-tomcat-7.0.109.tar.gz
+        dest: /opt/tomcat
+        remote_src: yes
+    - name: adding permissions to conf file
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-7.0.109/conf
+        recurse: yes
+        owner: tomcat
+        group: tomcat
+        state: directory
+        mode: '0777'
+    - name: adding permissions webapps
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-7.0.109/webapps
+        recurse: yes
+        owner: tomcat
+    - name: adding permissions to work
+      ansible.builtin.file:                                                        
+        path: /opt/tomcat/apache-tomcat-7.0.109/work
+        recurse: yes
+        owner: tomcat
+    - name: adding permissions to temp
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-7.0.109/temp
+        recurse: yes
+        owner: tomcat
+    - name: adding permissions webapps
+      ansible.builtin.file:
+        path: /opt/tomcat/apache-tomcat-7.0.109/logs
+        recurse: yes
+        owner: tomcat
+    - name: copy tomcat service file
+      ansible.builtin.copy:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+        owner: tomcat
+        group: tomcat
+    - name: reload daemon and start tomcat
+      ansible.builtin.systemd:
+        name: tomcat
+        daemon_reload: true
+        enabled: true
+        state: started
+    - name: adding directory
+      ansible.builtin.file:
+        path: /var/lib/OpenMRS
+        recurse: yes
+        owner: tomcat
+        group: tomcat
+        state: directory
+        mode: '0777'
+    - name: install openmrs
+      ansible.builtin.get_url:
+        url: https://sourceforge.net/projects/openmrs/files/releases/OpenMRS_Platform_2.5.0/openmrs.war
+        dest: /var/lib/OpenMRS
+        mode: '0777'
+    - name: copy openmrs to webapps
+      ansible.builtin.copy:
+        src: /var/lib/OpenMRS/openmrs.war
+        dest: /opt/tomcat/apache-tomcat-7.0.109/webapps
+        owner: tomcat
+        group: tomcat
+        mode: '0777'
+    
+    
