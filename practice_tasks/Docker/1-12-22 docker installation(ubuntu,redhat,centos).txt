@@ -1,0 +1,34 @@
+ubuntu
+
+$ sudo apt-get update
+$ sudo apt install docker.io
+$ sudo snap install docker
+$ docker --version
+
+centos7
+
+yum update -y
+yum install docker -y
+service docker status
+service docker start
+service docker status
+
+
+redhat
+
+yum update -y
+dnf update -y ; reboot
+dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+dnf list docker-ce
+dnf install docker-ce --nobest -y
+systemctl start docker
+systemctl enable docker
+docker --version
+
+
+to check username
+
+id -nu
+echo $user
+whoami
+logname

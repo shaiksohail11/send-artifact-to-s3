@@ -1,0 +1,33 @@
+---
+- name: creating mysql database using roles
+  hosts: all
+  become: true
+  roles:
+    - role: geerlingguy.mysql
+
+---
+- name: creating postgres database using roles
+  hosts: all
+  become: true
+  roles:
+    - role: robertdebock.postgres
+      postgres_port: 6543
+
+
+---
+- name: creating mongodb database using roles
+  hosts: all
+  become: true
+  roles:
+    - role: darexsu.mongodb
+      mongodb_port: 27020
+
+---
+- name: creating docker
+  hosts: all
+  become: true
+  roles:
+    - role: geerlingguy.docker
+
+
+

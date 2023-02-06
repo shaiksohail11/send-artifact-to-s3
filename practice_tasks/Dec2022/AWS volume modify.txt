@@ -1,0 +1,43 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+To set volumes permanently
+sudo blkid
+
+UUID=<uuid-from-blk-id>   /additional   xfs   defaults,nofail   1   2
+
+07aec504-cd68-4d01-b6c6-5ed53e8fd93e
+
+vi /etc/fstab
+
+UUID=07aec504-cd68-4d01-b6c6-5ed53e8fd93e  /additional   xfs   defaults,nofail   1   2
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+lsblk
+df -h
+fdisk -l
+fdisk /dev/xvdb
+m
+p
+d
+n
+p
+1
+w
+sudo xfs_growfs -d /additional
+sudo resize2fs /dev/xvdb1
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+touch anyname {1..50}.txt
+
+approcahes
+gui
+cli
+api
+
+rwx 421
+
+13,14,15
+
+control userpasswords2
+User Accounts

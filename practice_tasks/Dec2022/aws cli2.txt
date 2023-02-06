@@ -1,0 +1,48 @@
+aws <command> <sub command> 
+
+aws ec2 describe-vpcs --query "Vpcs[].VpcId"
+aws ec2 run-instances --image-id ami-0574da719dca65348 --count 1 --instance-type t2.micro --key-name myself
+
+
+
+aws ec2 create-security-group --group-name my-sg --description "My security group" --vpc-id vpc-0a0cd76beab324358 --group-id sg-0ff1330fb3b647e94 --protocol tcp --port 3389 --cidr x.x.x.x
+
+
+
+aws ec2 authorize-security-group-ingress --group-id sg-903004f8 --protocol tcp --port 3389 --cidr x.x.x.x
+
+aws rds create-db-instance \
+    --db-instance-identifier test-mysql-instance \
+    --db-instance-class db.t3.micro \
+    --engine mysql \
+    --master-username kishore \
+    --master-user-password kishore123 \
+    --allocated-storage 20
+	
+
+
+aws ec2 describe-security-groups
+aws ec2 describe-availability-zones
+aws ec2 describe-regions
+aws ec2 describe-regions --output text
+aws rds "delete-db-instance" --db-instance-identifier "test-mysql-instance" --skip-final-snapshot
+
+aws rds create-db-instance --db-instance-identifier test-mysql-instance --db-instance-class db.t3.micro --engine mysql --master-username kishore --master-user-password kishore123 --allocated-storage 20
+
+aws rds create-db-instance-read-replica --db-instance-identifier test-instance-repl --source-db-instance-identifier test-instance
+
+aws rds create-db-instance-read-replica --db-instance-identifier test-mysql --source-db-instance-identifier test-mysql-instance
+
+aws rds create-db-cluster \
+   --db-cluster-identifier mysql-multi-az-db-cluster \
+   --engine mysql \
+   --engine-version 8.0.28  \
+   --master-user-password password \
+   --master-username admin \
+   --port 3306 \
+   --backup-retention-period 1  \
+   --db-subnet-group-name default \
+   --allocated-storage 4000 \
+   --storage-type io1 \
+   --iops 10000 \
+   --db-cluster-instance-class db.r6gd.xlarge

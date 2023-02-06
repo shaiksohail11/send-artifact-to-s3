@@ -1,0 +1,16 @@
+---
+- name: installing dotnet
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        deb: https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        update_cache: yes
+        pkg:
+        - apt-transport-https
+        - aspnetcore-runtime-7.0
+        - dotnet-sdk-7.0
+        state: present

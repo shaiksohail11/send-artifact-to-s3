@@ -1,0 +1,35 @@
+
+
+create 2 machines 1 for control node and one for node
+
+sudo vi /etc/ssh/sshd_config
+sudo adduser username
+vi /etc/sudoers
+   add user to the sudoers file
+
+on control node 1 
+   ssh-keygen
+   ssh-copy-id username@pvtip
+   su username
+
+install ansible on control node
+vi hosts  --> add pvt ip of node to the hosts file
+ansible all -i hosts -m ping
+
+vi playbook.yml
+  ---
+  - name: installing apache2 on ubuntu
+  hosts: all
+  become: true
+  tasks: 
+    - name: install apache2
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: true
+        state: present
+ansible-playbook -i hosts playbook.yml
+
+copy ur node public ip and verify in web
+
+
+

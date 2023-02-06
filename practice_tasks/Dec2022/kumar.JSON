@@ -1,0 +1,18 @@
+{
+    "institute": "qtthought",
+    "studentdetails": {
+        "name": "kishore",
+        "course": "aws",
+        "room": 209
+    },
+    "studentdetails1": {
+        "name": "krrish",
+        "course": "devops",
+        "room": 513
+    },
+    "studentdetails2": {
+        "name": "kumar",
+        "course": "azure",
+        "room": 407
+    }
+}

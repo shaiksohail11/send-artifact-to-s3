@@ -1,0 +1,21 @@
+---
+- name: this is my tomcatapp
+  hosts: all
+  become: yes
+  tasks:
+    - name: installing java on my node
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        update_cache: true
+        state: present
+
+
+---
+- name: this is my centos app
+  hosts: all
+  become: yes
+  tasks:
+    - name: installing java on centos
+      ansible.builtin.yum:
+        name: java-11-openjdk
+        state: present

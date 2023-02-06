@@ -1,0 +1,14 @@
+
+FROM ubuntu
+MAINTAINER 143krrish143@gmail.com
+RUN mkdir /opt/tomcat/
+RUN apt update -y
+RUN apt install openjdk-11-jdk -y && apt install wget -y
+WORKDIR /opt/tomcat
+ADD https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.84/bin/apache-tomcat-8.5.84.tar.gz /opt/tomcat
+RUN tar -xvzf apache-tomcat-8.5.84.tar.gz
+
+WORKDIR /opt/tomcat/apache-tomcat-8.5.84/
+ADD https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/gameoflife.war /opt/tomcat/apache-tomcat-8.5.84/webapps/gameoflife.war
+EXPOSE 8080
+CMD ["/opt/tomcat/apache-tomcat-8.5.84/bin/catalina.sh", "run"]

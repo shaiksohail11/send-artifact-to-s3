@@ -1,0 +1,29 @@
+---
+- name: install mongodb on ubuntu
+  hosts: all
+  become: true
+  tasks:
+    - name: adding mongo gpg key
+      ansible.builtin.apt_key:
+          keyserver: hkp://keyserver.ubuntu.com
+          id: 9DA31620334BD75D9DCB49F368818C72E52529D4
+          state: present
+    - name: add deb packages
+      ansible.builtin.apt_repository:
+        repo: 'deb [arch=amd64] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse'
+        state: present
+    - name: install mongodb
+      ansible.builtin.apt:
+        name: mongodb-org
+        update_cache: true
+        state: present
+    - name: copy service file
+      ansible.builtin.copy:
+        src: mongod.conf
+        dest: /etc/mongod.conf
+    - name: start mongodb
+      ansible.builtin.systemd:
+        name: mongod
+        daemon_reload: yes
+        enabled: yes
+        state: restarted

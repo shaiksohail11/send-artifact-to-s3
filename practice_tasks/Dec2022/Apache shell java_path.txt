@@ -1,0 +1,36 @@
+#!/bin/sh
+yum -y install httpd
+systemctl enable httpd
+systemctl start httpd.service
+
+#!/bin/sh
+apt -y install apache2
+systemctl enable apache2
+systemctl start apache2.service
+
+@@@@@@@@@@@@
+vi /etc/sudoers
+username ALL=(ALL) NOPASSWD: ALL
+@@@@@@@@@@@@
+
+tar zxvf
+
+vi /etc/environment
+PATH=$PATH:$JAVA_HOME/home/ubuntu/jdk-18.0.2.1/bin
+
+@@@@@@@@@@@@@@@@@@@@@@@@
+to set permanent java path
+vi /root/.bash_profile 
+
+export JAVA_HOME=/opt/jdk1.8.0_212 
+export PATH=$PATH:/opt/jdk1.8.0_212/bin  
+
+source /root/.bash_profile
+
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.bshrc
+
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin

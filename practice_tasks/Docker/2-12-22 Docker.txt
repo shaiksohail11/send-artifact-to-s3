@@ -1,0 +1,39 @@
+REDHAT
+
+yum update -y
+yum remove podman buildah
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/rhel/docker-ce.repo
+	 instead of rhel use centos
+	
+sudo  yum update
+
+systemctl enable docker.service
+
+
+
+docker search imagename --> search from hub from cli
+docker search imagename --limit 5 
+
+docker search --format "{{.Name}}: {{.StarCount}}" nginx
+
+docker search --filter stars=3 busybox
+docker search --filter is-automated=true busybox
+dokcer image pull alpine:3
+docker image inspect alpine:3
+
+docker image inspect alpine:3 --format " {{ .Id }} "
+docker image inspect alpine:3 --format " {{ .Config.Exposedports }} "    
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname                                       
+											
+											
+
+
+
+
+

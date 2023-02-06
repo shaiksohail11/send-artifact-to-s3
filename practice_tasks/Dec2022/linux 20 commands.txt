@@ -1,0 +1,73 @@
+linux 20 new commands
+
+1. ps aux/ux
+The ps aux command is a tool to monitor processes running on your Linux system
+
+2. top
+top command is used to show the Linux processes. It provides a dynamic real-time view of the running system.
+
+3. history 
+this shows the previous executed commands in our cli
+
+4. diff 
+   diff file1 file2
+   diff -c file1 file2
+This command is used to display the differences in the files by comparing the files line by line.
+
+5. du 
+used to check the actual size of a file/directory
+The du command is a standard Linux/Unix command that allows a user to gain disk usage information quickly
+
+6. uname 
+it is used to provide the system information like architecture and kernal version
+
+7. lsblk
+to list all the block storages
+
+8. df -h 
+to all the mounted storages in human readable format
+
+9. ls -lrt
+list the files and directories in long listing format
+
+10. file 
+    file file/dirname
+file command is used to determine the type of a file.
+
+11. less
+    less filename
+The less command is a Linux terminal pager that shows a file's contents one screen at a time.
+
+12. head 
+    head filename
+used to display the content from top and 1st 10 lines in the file
+
+13. tail
+    tail filename
+used to display the content from bottom and last 10 lines in the file
+
+14. cut
+    cut -b 1 filename
+it is used to cut the output vertically
+
+15. ps 
+    ps -ef |grep apache2
+used to show all the process running
+
+16. kill 
+use to kill running process
+
+17. systemctl 
+used to manage the installed services
+
+18. uptime
+it displays how long the syatem has been running + load
+
+19. last reboot
+it shows the last system reboot history
+
+20. w
+it displays who is online
+
+
+

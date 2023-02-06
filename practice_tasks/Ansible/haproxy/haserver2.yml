@@ -1,0 +1,26 @@
+---
+- name: install apache2 on severs
+  hosts: server2
+  become: true
+  tasks:
+    - name: install apache2
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: yes
+        state: present
+    - name: create ports.conf
+      ansible.builtin.copy:
+        src: ports.conf
+        dest: /etc/apache2/ports.conf
+    - name: Create 000-default.conf
+      ansible.builtin.copy:
+        src: 000-default.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+    - name: Remove directory
+      ansible.builtin.file:
+        path: /var/www/html/index.html 
+        state: absent
+    - name: copy content to indexpage
+      ansible.builtin.copy:
+        src: index1.html
+        dest: /var/www/html/index1.html

@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tomcat-rs
+  labels:
+    app: tomcat
+spec:
+  minReadySeconds: 5
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat
+      env: qa
+  template:
+    metadata:
+      name: tomcat-pod
+      labels:
+        app: tomcat
+        env: qa
+        jdk: "11"
+        ver: "11.0"
+    spec:
+      containers:
+        - name: tomcat
+          image: tomcat:11.0-jdk11
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+

@@ -1,0 +1,23 @@
+---
+name: list of moives
+Movies:
+  - name: avatar
+    director: James Cameron
+    language: english
+    music: James Horner
+  - name: RRR
+    director: ss rajamouli
+    language: telugu
+    music: mm keeravani
+  - name: kantara
+    director: Rishab Shetty
+    language: kannada
+    music: B. Ajaneesh Loknath
+  - name: vikram
+    director: Lokesh Kanagaraj
+    language: tamil
+    misic: Anirudh Ravichander
+  - name: The Kashmir Files
+    director: Vivek Agnihotri
+    language: hindi
+    music: Rohit Sharma

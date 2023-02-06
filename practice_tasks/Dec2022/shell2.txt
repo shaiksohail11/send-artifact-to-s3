@@ -1,0 +1,15 @@
+
+#!/bin/bash
+declare -i number=36
+declare -i start=2
+remainder=$(($number % $start))
+while [( $start -lt $number )]
+do 
+   if [( $remainder -eq 0)];
+   then
+       echo "not prime"
+	   exit
+   fi
+   start=$(($start+1)) 
+done
+echo "prime"  

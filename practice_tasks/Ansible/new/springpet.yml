@@ -1,0 +1,17 @@
+---
+- name: install spring pet clinic
+  hosts: all
+  become: true
+  tasks:
+    - name: install java
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
+    - name: download spring app
+      ansible.builtin.get_url:
+        url: https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+        dest: /home/ubuntu
+        mode: '0777'
+    - name: start spring application
+      ansible.builtin.command: 'java -jar /home/ubuntu/spring-petclinic-2.4.2.jar'

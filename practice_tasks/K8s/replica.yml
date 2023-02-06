@@ -1,0 +1,19 @@
+---
+apiversion: apps/v1
+kind: ReplicaSet
+metadata: 
+  - name: ReplicaSet
+spec: 
+  minReadySeconds: 3
+  replicas: 5
+  template:
+    metadata:
+      name: jenkins-pod
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins
+          command: ping -c 4 google.com
+          ports:
+            - containerPort: 8080
+              protocol: TCP

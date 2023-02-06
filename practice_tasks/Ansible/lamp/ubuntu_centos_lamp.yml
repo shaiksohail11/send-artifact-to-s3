@@ -1,0 +1,56 @@
+---
+- name: install lampstack application
+  hosts: all
+  become: true
+  tasks:
+    - name: install apache on ubuntu
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: true
+        state: present
+      when: ansible_facts['distribution'] == "Ubuntu"
+      notify:
+        - enable and restart apache2 service
+    - name: install httpd on centos
+      ansible.builtin.dnf:
+        name: httpd
+        update_cache: true
+        state: present
+      when: ansible_facts['distribution'] == "CentOS"
+      notify:
+        - enable and restart httpd service
+    - name: Install a list of packages
+      ansible.builtin.apt:
+        name:
+          - php 
+          - libapache2-mod-php 
+          - php-mysql
+        state: present
+      when: ansible_facts['distribution'] == "Ubuntu"
+      notify:
+        - enable and restart apache2 service
+    - name: Install a list of packages
+      ansible.builtin.dnf:
+        name:
+          - php 
+          - php-mysqlnd
+        state: present
+      when: ansible_facts['distribution'] == "CentOS"
+      notify:
+        - enable and restart httpd service
+    - name: copy info.php file
+      ansible.builtin.copy:
+        src: info.php
+        dest: /var/www/html/info.php
+  handlers:
+    - name: enable and restart apache2 service
+      ansible.builtin.systemd:
+        name: apache2
+        enabled: yes
+        state: restarted
+    - name: enable and restart httpd service
+      ansible.builtin.systemd:
+        name: httpd
+        enabled: yes
+        daemon_reload: yes
+        state: restarted

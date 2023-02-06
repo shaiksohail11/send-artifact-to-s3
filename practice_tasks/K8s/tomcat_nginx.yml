@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  - name: tomcat
+spec:
+  - name: tomcat
+    image: tomcat:latest
+    ports:
+      containerPort:
+        - 8080
+
+---
+apiVersion:  v1
+kind: Pod
+metadata: 
+  - name: nginx
+spec:
+  - name: nginx
+    image: nginx
+    ports: 
+      containerPort: 80
+      protocol: TCP

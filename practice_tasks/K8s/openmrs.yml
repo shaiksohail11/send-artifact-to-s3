@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: open-deploy
+spec:
+  minReadySeconds: 3
+  replicas: 1
+  selector:
+    app: mariadb
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: mariadb
+      labels:
+        app: mariadb
+        version: "10.3"
+    spec:
+      containers:
+        - name: opemmrs
+          image: kishorekrrish/openmrs:1.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+           - mountPath: /var/lib/mysql
+             name: managed
+    volumes:
+    - name: mariadb
+      persistentVolumeClaim:
+        claimName: managed
+        readOnly: false 

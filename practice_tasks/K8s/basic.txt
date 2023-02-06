@@ -1,0 +1,42 @@
+
+#replication controller is not persistant 
+  - here the whole object is replaced and we dont hv any versions here(it is over written)
+#replica set is persistant
+  -for suppose we want move to new version and agin we want to move to previous versions here its possible(it hv versions) 
+  - it is used mainly in deployments
+# service to expose our application ot outside world we sue this
+  - we give tags to the service as well as pods while creating, if we check in the web it will go one of the pod and then we will get application output
+# we have cluster ip service ip it is default and it is basically we use inside the cluster
+  for the outside world we hv 3 types of service types
+   . nodeport (expose the service on the particular port on all the nodes inthe cluster)
+   . loadbalancer (it is for aks, eks gke basically for the cloud providers)
+   . external (it creates a dns record which can be added to the dns servers in the organisation)
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+apt install -y kubeadm=1.18.13-00 kubelet=1.18.13-00 kubectl=1.18.13-00
+
+apt install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
+
+sudo apt-mark hold kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
+
+kubeadm join 172.31.5.175:6443 --token 7j4kaf.8m5vx4ei67rda93a \
+        --discovery-token-ca-cert-hash sha256:62e66f4d0cee1554868765af630eb647fdc82dc94a3a95960881f98b3e1b6d74
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+--cri-socket "unix command
+
+-A -w
+
+kubeadm join 172.31.6.83:6443 --token gxqnib.octem38cte2b9pw6 \
+        --discovery-token-ca-cert-hash sha256:f91b668c0994997368d50489c0e860dc36f3060145f8c066bea00135824ef9a1
+		
+		
+kubeadm join 172.31.6.83:6443 --token gxqnib.octem38cte2b9pw6 \
+        --discovery-token-ca-cert-hash sha256:f91b668c0994997368d50489c0e860dc36f3060145f8c066bea00135824ef9a1 --cri-socket unix:///var/run/cri-dockerd.sock
+		
+kubectl get nodes --watch
+		          -o wide
+  
+    

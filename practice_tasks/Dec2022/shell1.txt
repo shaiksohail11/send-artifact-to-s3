@@ -1,0 +1,13 @@
+	
+number = 39
+start = 2
+reminder = number%start
+if remainder = 0 print("it not a prime")
+else execute 1+start then  execute step 3
+
+
+
+number = abc
+start = abc=cba
+print ("its a palindrome")
+number# number

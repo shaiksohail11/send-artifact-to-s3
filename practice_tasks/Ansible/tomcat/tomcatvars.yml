@@ -1,0 +1,83 @@
+---
+- name: install tomcat
+  hosts: all
+  become: true
+  vars:
+    java_package_name: openjdk-11-jdk
+    user_name: tomcat
+    group_name: tomcat
+    user_home: /opt/tomcat
+    user_shell: /bin/false
+    tomcat_version: "8.5.84"
+    tomcat_major_version: "8"
+    tomcat_service_name: tomcat.service
+  tasks:
+    - name: installing java
+      ansible.builtin.apt:
+        name: "{{ java_package_name }}"
+        update_cache: yes
+        state: present
+    - name: adding tomcat group
+      ansible.builtin.group:
+        name: "{{ user_name }}"
+        state: present
+    - name: adding tomcat user
+      ansible.builtin.user:
+        name: "{{ user_name }}"
+        create_home: true
+        group: "{{ group_name }}"
+        home: "{{ user_home }}"
+        shell: "{{ user_shell }}"
+        state: present
+    - name: install and untar tomcat
+      ansible.builtin.unarchive:
+        src: "https://dlcdn.apache.org/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
+        remote_src: true
+        dest: "{{ user_home }}"
+    - name: create a symbolic link
+      ansible.builtin.file:
+        src: "{{ user_home }}/apache-tomcat-{{ tomcat_version }}"
+        dest: "{{ user_home }}/latest"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        state: link
+    - name: change permissions
+      ansible.builtin.file:
+        path: "{{ user_home }}"
+        recurse: yes
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        state: directory
+        mode: '0777'
+    - name: add execute permissions to shell files
+      ansible.builtin.command: "sudo sh -c 'chmod +x {{ user_home }}/latest/bin/*.sh'"
+    - name: Create a systemd unit file
+      ansible.builtin.copy:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+    - name: Create a systemd conf file
+      ansible.builtin.copy:
+        src: tomcat-users.xml
+        dest: "{{ user_home }}/latest/conf/tomcat-users.xml"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+    - name: Create a systemd manager context file
+      ansible.builtin.copy:
+        src: context.xml
+        dest: "{{ user_home }}/latest/webapps/manager/META-INF/context.xml"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+    - name: Create a systemd host_manager context file
+      ansible.builtin.copy:
+        src: context.xml
+        dest: "{{ user_home }}/latest/webapps/host-manager/META-INF/context.xml"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+    - name: reload daemon and start tomcat
+      ansible.builtin.systemd:
+        name: "{{ tomcat_service_name }}"
+        daemon_reload: yes
+        enabled: yes
+        state: started

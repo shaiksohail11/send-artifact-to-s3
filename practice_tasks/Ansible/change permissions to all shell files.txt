@@ -1,0 +1,64 @@
+
+- hosts: localhost
+  gather_facts: false
+  vars:
+  tasks:
+    - name: parse /tmp directory
+      find:
+        paths: /tmp
+        patterns: '*.sh'
+      register: list_of_files
+
+    - debug:
+        var: item.path
+      with_items: "{{ list_of_files.files }}"
+
+    - name: change permissions
+      file:
+        path: "{{ item.path }}"
+        mode: a+x
+      with_items: "{{ list_of_files.files }}"
+	  
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+---
+- name: shell file permissions change
+  hosts: localhost
+  gather_facts: false
+  vars: 
+  tasks:
+    - name: change shell permissions
+      find:
+        paths: /home/kishore
+        patterns: '*.sh'
+      register: find_result
+    - debug:
+        var: item.path
+      with_items: "{{ find_result.files }}"
+    - name: change permissions
+      file:
+        path: "{{ item.path }}"
+        mode: '1777'
+      with_items: "{{ find_result.files }}"
+	  
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+---
+- name: shell permissions change
+  hosts: localhost
+  gather_facts: false
+  vars:
+  tasks:
+    - name: change shell permissions
+      find:
+        paths: /home/kishore
+        patterns: '*.sh'
+      register: find_result
+    - debug:
+        var: item.path
+      loop: "{{ find_result.files }}"
+    - name: change permissions
+      file:
+        path: "{{ item.path }}"
+        mode: '1666'
+      loop: "{{ find_result.files }}"
