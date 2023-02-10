@@ -1,0 +1,10 @@
+---
+pool: 'Azure Pipelines'
+
+trigger:
+  - master
+steps:
+    steps:
+      - task: Docker@2
+        inputs:
+        command: 'build'
