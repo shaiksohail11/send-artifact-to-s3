@@ -1,0 +1,28 @@
+---
+pool:
+  vmImage: ubuntu-latest
+  name: 'Azure Pipelines'
+
+trigger:
+  - master
+
+stages:
+- stage: linux
+  jobs:
+  - job: linux echo statement1
+    steps:
+    - script: "Do CI work1"
+  - job: linux echo statement2
+    steps:
+    - script: "Do CI work2"
+  - job: linux echo statement3
+    steps:
+    - script: "Do CI work3"
+  - job: linux echo statement4
+    steps:
+    - script: "Do CI work4"
+  - job: linux echo statement5
+    steps:
+    - script: "Do CI work5"
+    
+    
