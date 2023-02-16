@@ -46,6 +46,33 @@ WantedBy=multi-user.target
 12. sudo systemctl enable --now spring.service
 13. sudo systemctl start spring.service
 14. sudo systemctl status spring.service
-15. 
+15. ipaddress:8080
+    
+spring application from ansible
+-------------------------------
+1. install ansible and setup ansible
+2. vi hosts
+3. vi spring.yml [referhere](https://github.com/nkishore555/joip_docs_QT/blob/main/Azure_Devops/spring_pet/spring.yml) refere here for playbook
+4. ansible-playbook -i hosts spring.yml
+
+spring application from azure devops pipeline
+---------------------------------------------
+1. first we need to import the code from github to azure repos [referhere](https://github.com/nkishore555/joip_docs_QT/blob/main/Azure_Devops/spring_pet/azure_devops_spring.yml) refer here for the azure pipeline code
+```pipeline code
+---
+pool:
+  name: "kishore"
+
+trigger:
+  - main
+
+steps:
+- script: |
+    ansible-playbook -i hosts spring.yml
+  workingDirectory: /home/kishore
+  displayName: my playbook to install spring pet clinic application
+```
+2. select pileline then select new pipeline slelect our repo
+3. select existing yml file then click ok RUN icon your application will start run
 
 
