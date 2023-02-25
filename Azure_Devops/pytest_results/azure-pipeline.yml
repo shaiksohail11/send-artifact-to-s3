@@ -1,0 +1,14 @@
+---
+pool:
+  name: 'Azure Pipelines'
+  vmImage: ubuntu-latest
+trigger:
+  - master
+steps:
+  - script: docker compose -f local.yml run --rm django pytest --junitxml=TEST-REPORT.xml
+    displayName: getting xml files
+    continueOnError: true
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/TEST-*.xml'

@@ -10,3 +10,10 @@ steps:
     ansible-playbook -i hosts spring.yml
   workingDirectory: /home/kishore
   displayName: my playbook to install spring pet clinic application
+
+
+
+  - script: |
+    sudo docker compose -f local-test-live.yml run --rm django pytest
+  workingDirectory: /home/ubuntu/llemr
+  displayName: this is my pytest
